@@ -1,7 +1,84 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+    __________________________________________________
+    Hello! I'm Jimmy. What can I do for you?
+    __________________________________________________
+    __________________________________________________
+     Got it. I've added this task:
+       [T][ ] borrow book
+     Now you have 1 tasks in the list.
+    __________________________________________________
+    __________________________________________________
+    Here are the tasks in your list!
+     1.[T][ ] borrow book
+    __________________________________________________
+    __________________________________________________
+    Nice! I've marked this task as done
+    [T][X] borrow book
+    __________________________________________________
+    __________________________________________________
+    Here are the tasks in your list!
+     1.[T][X] borrow book
+    __________________________________________________
+    __________________________________________________
+     Got it. I've added this task:
+       [E][ ] visit market (from: 2pm to: 5pm)
+     Now you have 2 tasks in the list.
+    __________________________________________________
+    __________________________________________________
+    Here are the tasks in your list!
+     1.[T][X] borrow book
+     2.[E][ ] visit market (from: 2pm to: 5pm)
+    __________________________________________________
+    __________________________________________________
+     Got it. I've added this task:
+       [D][ ] cs2103 assignment (by: 8pm)
+     Now you have 3 tasks in the list.
+    __________________________________________________
+    __________________________________________________
+    Here are the tasks in your list!
+     1.[T][X] borrow book
+     2.[E][ ] visit market (from: 2pm to: 5pm)
+     3.[D][ ] cs2103 assignment (by: 8pm)
+    __________________________________________________
+    __________________________________________________
+    Nice! I've marked this task as done
+    [D][X] cs2103 assignment (by: 8pm)
+    __________________________________________________
+    __________________________________________________
+    Here are the tasks in your list!
+     1.[T][X] borrow book
+     2.[E][ ] visit market (from: 2pm to: 5pm)
+     3.[D][X] cs2103 assignment (by: 8pm)
+    __________________________________________________
+    __________________________________________________
+    Nice! I've marked this task as done
+    [E][X] visit market (from: 2pm to: 5pm)
+    __________________________________________________
+    __________________________________________________
+    Here are the tasks in your list!
+     1.[T][X] borrow book
+     2.[E][X] visit market (from: 2pm to: 5pm)
+     3.[D][X] cs2103 assignment (by: 8pm)
+    __________________________________________________
+    __________________________________________________
+    OK, I've marked this task as not done yet:
+    [E][ ] visit market (from: 2pm to: 5pm)
+    __________________________________________________
+    __________________________________________________
+    Here are the tasks in your list!
+     1.[T][X] borrow book
+     2.[E][ ] visit market (from: 2pm to: 5pm)
+     3.[D][X] cs2103 assignment (by: 8pm)
+    __________________________________________________
+    __________________________________________________
+    OK, I've marked this task as not done yet:
+    [D][ ] cs2103 assignment (by: 8pm)
+    __________________________________________________
+    __________________________________________________
+    Here are the tasks in your list!
+     1.[T][X] borrow book
+     2.[E][ ] visit market (from: 2pm to: 5pm)
+     3.[D][ ] cs2103 assignment (by: 8pm)
+    __________________________________________________
+    __________________________________________________
+    Bye. Hope to see you again soon!
+    __________________________________________________
