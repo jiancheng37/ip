@@ -1,6 +1,6 @@
 public class Task {
-    private String name;
-    private boolean isCompleted;
+    protected String name;
+    protected boolean isCompleted;
     
     public Task(String name) {
         this.name = name;
@@ -21,5 +21,9 @@ public class Task {
     
     public boolean isCompleted() {
         return isCompleted;
+    }
+
+    public String getStatus() {
+        return isCompleted ? "X" : " ";
     }
 }
