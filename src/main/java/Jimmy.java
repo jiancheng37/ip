@@ -86,6 +86,12 @@ public class Jimmy {
                 }
                 String name = input.substring(5).trim();
                 Todo task = new Todo(name);
+                if (index >= list.length) {
+                    System.out.println("    __________________________________________________");
+                    System.out.println("    Error: Task list is full. Cannot add more tasks.");
+                    System.out.println("    __________________________________________________");
+                    continue;
+                }
                 list[index++] = task;
                 System.out.println("    __________________________________________________");
                 System.out.println("     Got it. I've added this task:");
@@ -105,6 +111,12 @@ public class Jimmy {
                     continue;
                 }
                 Deadline task = new Deadline(parts[0].trim(), parts[1].trim());
+                if (index >= list.length) {
+                    System.out.println("    __________________________________________________");
+                    System.out.println("    Error: Task list is full. Cannot add more tasks.");
+                    System.out.println("    __________________________________________________");
+                    continue;
+                }
                 list[index++] = task;
                 System.out.println("    __________________________________________________");
                 System.out.println("     Got it. I've added this task:");
@@ -124,6 +136,12 @@ public class Jimmy {
                     continue;
                 }
                 Event task = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
+                if (index >= list.length) {
+                    System.out.println("    __________________________________________________");
+                    System.out.println("    Error: Task list is full. Cannot add more tasks.");
+                    System.out.println("    __________________________________________________");
+                    continue;
+                }
                 list[index++] = task;
                 System.out.println("    __________________________________________________");
                 System.out.println("     Got it. I've added this task:");
