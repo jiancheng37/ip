@@ -8,14 +8,15 @@ public class Jimmy {
         System.out.println("    __________________________________________________");
         while (true) {
             String input = sc.nextLine();
-            System.out.println("    __________________________________________________");
-            System.out.println("    " + input);
-            System.out.println("    __________________________________________________");
             if (input.equals("bye")) {
+                System.out.println("    __________________________________________________");
                 System.out.println("    Bye. Hope to see you again soon!");
                 System.out.println("    __________________________________________________");
                 break;
             }
+            System.out.println("    __________________________________________________");
+            System.out.println("    " + input);
+            System.out.println("    __________________________________________________");
         }
         sc.close();
     }
