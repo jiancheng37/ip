@@ -9,6 +9,11 @@ public class Event extends Task {
     }
 
     @Override
+    public String toFileFormat() {
+        return "E | " + (isCompleted ? "1" : "0") + " | " + name + " | " + from + " | " + to;
+    }
+
+    @Override
     public String toString() {
         return "[E][" + getStatus() + "] " + name + " (from: " + from + " to: " + to + ")";
     }

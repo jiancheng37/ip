@@ -3,7 +3,8 @@ import java.util.Scanner;
 
 public class Jimmy {
     public static void main(String[] args) {
-        ArrayList<Task> list = new ArrayList<>();
+        Storage storage = new Storage("data/jimmy.txt");
+        ArrayList<Task> list = storage.load(); // Load tasks from file
         Scanner sc = new Scanner(System.in);
 
         System.out.println("    __________________________________________________");
@@ -29,18 +30,15 @@ public class Jimmy {
 
             } else if (input.startsWith("mark")) {
                 String[] words = input.split(" ");
-                
                 if (words.length != 2) {
-                    System.out.println("    __________________________________________________");
                     System.out.println("    Error: Please provide only one number after 'mark'.");
-                    System.out.println("    __________________________________________________");
                     continue;
                 }
-                System.out.println("    __________________________________________________");
                 try {
                     int taskIndex = Integer.parseInt(words[1]) - 1;
                     if (taskIndex >= 0 && taskIndex < list.size()) {
                         list.get(taskIndex).mark();
+                        storage.save(list); // Save changes
                         System.out.println("    Nice! I've marked this task as done:");
                         System.out.println("      " + list.get(taskIndex));
                     } else {
@@ -49,21 +47,18 @@ public class Jimmy {
                 } catch (NumberFormatException e) {
                     System.out.println("    Error: '" + words[1] + "' is not a valid number.");
                 }
-                System.out.println("    __________________________________________________");
 
             } else if (input.startsWith("unmark")) {
                 String[] words = input.split(" ");
                 if (words.length != 2) {
-                    System.out.println("    __________________________________________________");
                     System.out.println("    Error: Please provide only one number after 'unmark'.");
-                    System.out.println("    __________________________________________________");
                     continue;
                 }
-                System.out.println("    __________________________________________________");
                 try {
                     int taskIndex = Integer.parseInt(words[1]) - 1;
                     if (taskIndex >= 0 && taskIndex < list.size()) {
                         list.get(taskIndex).unmark();
+                        storage.save(list); // Save changes
                         System.out.println("    OK, I've marked this task as not done yet:");
                         System.out.println("      " + list.get(taskIndex));
                     } else {
@@ -72,96 +67,75 @@ public class Jimmy {
                 } catch (NumberFormatException e) {
                     System.out.println("    Error: '" + words[1] + "' is not a valid number.");
                 }
-                System.out.println("    __________________________________________________");
 
             } else if (input.startsWith("todo")) {
                 if (input.trim().equals("todo")) {
-                    System.out.println("    __________________________________________________");
                     System.out.println("    Error: The description of a todo cannot be empty.");
-                    System.out.println("    __________________________________________________");
                     continue;
                 }
                 String name = input.substring(5).trim();
                 Todo task = new Todo(name);
                 list.add(task);
-                System.out.println("    __________________________________________________");
+                storage.save(list); // Save new task
                 System.out.println("     Got it. I've added this task:");
                 System.out.println("       " + task);
-                System.out.println("     Now you have " + list.size() + " tasks in the list.");
-                System.out.println("    __________________________________________________");
 
             } else if (input.startsWith("deadline")) {
                 if (input.trim().equals("deadline")) {
-                    System.out.println("    __________________________________________________");
                     System.out.println("    Error: The description of a deadline cannot be empty.");
-                    System.out.println("    __________________________________________________");
                     continue;
                 }
                 String[] parts = input.substring(9).split(" /by ");
-                if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
+                if (parts.length < 2) {
                     System.out.println("    Error: Please provide a deadline using '/by'.");
                     continue;
                 }
                 Deadline task = new Deadline(parts[0].trim(), parts[1].trim());
                 list.add(task);
-                System.out.println("    __________________________________________________");
+                storage.save(list); // Save new task
                 System.out.println("     Got it. I've added this task:");
                 System.out.println("       " + task);
-                System.out.println("     Now you have " + list.size() + " tasks in the list.");
-                System.out.println("    __________________________________________________");
 
             } else if (input.startsWith("event")) {
                 if (input.trim().equals("event")) {
-                    System.out.println("    __________________________________________________");
                     System.out.println("    Error: The description of an event cannot be empty.");
-                    System.out.println("    __________________________________________________");
                     continue;
                 }
                 String[] parts = input.substring(6).split(" /from | /to ");
-                if (parts.length < 3 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty() || parts[2].trim().isEmpty()) {
+                if (parts.length < 3) {
                     System.out.println("    Error: Please provide an event using '/from' and '/to'.");
                     continue;
                 }
                 Event task = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
                 list.add(task);
-                System.out.println("    __________________________________________________");
+                storage.save(list); // Save new task
                 System.out.println("     Got it. I've added this task:");
                 System.out.println("       " + task);
-                System.out.println("     Now you have " + list.size() + " tasks in the list.");
-                System.out.println("    __________________________________________________");
 
             } else if (input.startsWith("delete")) {
                 String[] words = input.split(" ");
                 if (words.length != 2) {
-                    System.out.println("    __________________________________________________");
                     System.out.println("    Error: Please provide only one number after 'delete'.");
-                    System.out.println("    __________________________________________________");
                     continue;
                 }
-
-                System.out.println("    __________________________________________________");
                 try {
                     int taskIndex = Integer.parseInt(words[1]) - 1;
                     if (taskIndex >= 0 && taskIndex < list.size()) {
                         Task removedTask = list.remove(taskIndex);
+                        storage.save(list); // Save after deletion
                         System.out.println("     Noted. I've removed this task:");
                         System.out.println("       " + removedTask);
-                        System.out.println("     Now you have " + list.size() + " tasks in the list.");
                     } else {
                         System.out.println("    Error: The task does not exist!");
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("    Error: '" + words[1] + "' is not a valid number.");
                 }
-                System.out.println("    __________________________________________________");
 
             } else {
-                System.out.println("    __________________________________________________");
                 System.out.println("     Invalid command. Try again!");
-                System.out.println("    __________________________________________________");
             }
         }
-
         sc.close();
     }
 }
