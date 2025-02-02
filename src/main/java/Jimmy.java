@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Jimmy {
     public static void main(String[] args) {
         Storage storage = new Storage("data/jimmy.txt");
-        ArrayList<Task> list = storage.load(); // Load tasks from file
+        ArrayList<Task> list = storage.load();
         Scanner sc = new Scanner(System.in);
 
         System.out.println("    __________________________________________________");
@@ -38,7 +38,7 @@ public class Jimmy {
                     int taskIndex = Integer.parseInt(words[1]) - 1;
                     if (taskIndex >= 0 && taskIndex < list.size()) {
                         list.get(taskIndex).mark();
-                        storage.save(list); // Save changes
+                        storage.save(list);
                         System.out.println("    Nice! I've marked this task as done:");
                         System.out.println("      " + list.get(taskIndex));
                     } else {
@@ -58,7 +58,7 @@ public class Jimmy {
                     int taskIndex = Integer.parseInt(words[1]) - 1;
                     if (taskIndex >= 0 && taskIndex < list.size()) {
                         list.get(taskIndex).unmark();
-                        storage.save(list); // Save changes
+                        storage.save(list);
                         System.out.println("    OK, I've marked this task as not done yet:");
                         System.out.println("      " + list.get(taskIndex));
                     } else {
@@ -76,7 +76,7 @@ public class Jimmy {
                 String name = input.substring(5).trim();
                 Todo task = new Todo(name);
                 list.add(task);
-                storage.save(list); // Save new task
+                storage.save(list);
                 System.out.println("     Got it. I've added this task:");
                 System.out.println("       " + task);
 
@@ -91,11 +91,12 @@ public class Jimmy {
                     continue;
                 }
                 Deadline task = new Deadline(parts[0].trim(), parts[1].trim());
-                list.add(task);
-                storage.save(list); // Save new task
-                System.out.println("     Got it. I've added this task:");
-                System.out.println("       " + task);
-
+                if (task.getBy() != null) {
+                    list.add(task);
+                    storage.save(list); // Save new task
+                    System.out.println("     Got it. I've added this task:");
+                    System.out.println("       " + task);
+                }
             } else if (input.startsWith("event")) {
                 if (input.trim().equals("event")) {
                     System.out.println("    Error: The description of an event cannot be empty.");
@@ -107,11 +108,12 @@ public class Jimmy {
                     continue;
                 }
                 Event task = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
-                list.add(task);
-                storage.save(list); // Save new task
-                System.out.println("     Got it. I've added this task:");
-                System.out.println("       " + task);
-
+                if (task.getTo() != null && task.getFrom() != null) {
+                    list.add(task);
+                    storage.save(list);
+                    System.out.println("     Got it. I've added this task:");
+                    System.out.println("       " + task);
+                }
             } else if (input.startsWith("delete")) {
                 String[] words = input.split(" ");
                 if (words.length != 2) {
@@ -122,7 +124,7 @@ public class Jimmy {
                     int taskIndex = Integer.parseInt(words[1]) - 1;
                     if (taskIndex >= 0 && taskIndex < list.size()) {
                         Task removedTask = list.remove(taskIndex);
-                        storage.save(list); // Save after deletion
+                        storage.save(list);
                         System.out.println("     Noted. I've removed this task:");
                         System.out.println("       " + removedTask);
                     } else {
