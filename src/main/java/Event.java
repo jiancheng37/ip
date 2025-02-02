@@ -9,15 +9,15 @@ public class Event extends Task {
     protected static final DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     protected static final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
-    public Event(String name, String from, String to) {
+    public Event(String name, String from, String to) throws JimmyException {
         super(name);
         try {
             this.from = LocalDateTime.parse(from, inputFormatter);
             this.to = LocalDateTime.parse(to, inputFormatter);
         } catch (DateTimeParseException e) {
-            System.out.println("Error: Invalid date format. Please use yyyy-MM-dd HHmm (e.g., 2019-12-02 1800).");
             this.from = null;
             this.to = null;
+            throw new JimmyException("Invalid date format. Please use yyyy-MM-dd HHmm (e.g., 2019-12-02 1800).");
         }
     }
 
