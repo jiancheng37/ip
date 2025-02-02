@@ -1,4 +1,5 @@
 package jimmy;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -6,14 +7,29 @@ import java.nio.file.Paths;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+/**
+ * Handles the loading and saving of tasks to a file for persistent storage.
+ * Ensures that the file and its directories exist, and supports reading from
+ * and writing to the file in a specific format.
+ */
 public class Storage {
     private Path filePath;
 
+    /**
+     * Constructs a {@code Storage} object with the specified file path.
+     * Ensures that the file and its parent directories exist.
+     *
+     * @param filePath the path to the file where tasks will be stored.
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
         ensureFileExists();
     }
 
+    /**
+     * Ensures the file and its parent directories exist.
+     * Creates them if they do not exist.
+     */
     private void ensureFileExists() {
         try {
             Path dir = filePath.getParent();
@@ -28,6 +44,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the file into an {@code ArrayList}.
+     * Parses each line of the file to recreate the corresponding {@code Task} objects.
+     *
+     * @return a list of tasks loaded from the file.
+     * @throws JimmyException if an I/O error occurs during file reading.
+     */
     public ArrayList<Task> load() throws JimmyException {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -61,7 +84,7 @@ public class Storage {
                 }
                 if (parts[1].equals("1")) {
                     task.mark();
-                }   
+                }
                 tasks.add(task);
             }
         } catch (IOException e) {
@@ -71,6 +94,13 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the provided list of tasks to the file.
+     * Each task is converted to a file-friendly format before saving.
+     *
+     * @param tasks the list of tasks to be saved.
+     * @throws JimmyException if an I/O error occurs during file writing.
+     */
     public void save(ArrayList<Task> tasks) throws JimmyException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath.toString()))) {
             for (Task task : tasks) {
