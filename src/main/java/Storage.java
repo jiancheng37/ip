@@ -2,6 +2,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class Storage {
@@ -39,10 +40,20 @@ public class Storage {
                         task = new Todo(parts[2]);
                         break;
                     case "D":
-                        task = new Deadline(parts[2], parts[3]);
+                        try {
+                            task = new Deadline(parts[2], parts[3]);
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Error: Invalid date format in file.");
+                            continue;
+                        }
                         break;
                     case "E":
-                        task = new Event(parts[2], parts[3], parts[3]);
+                        try {
+                            task = new Event(parts[2], parts[3], parts[4]);
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Error: Invalid date format in file.");
+                            continue;
+                        }
                         break;
                     default:
                         continue;
