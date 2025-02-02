@@ -27,7 +27,7 @@ public class Storage {
         }
     }
 
-    public ArrayList<Task> load() {
+    public ArrayList<Task> load() throws JimmyException {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath.toString()))) {
@@ -60,24 +60,24 @@ public class Storage {
                 }
                 if (parts[1].equals("1")) {
                     task.mark();
-                }
+                }   
                 tasks.add(task);
             }
         } catch (IOException e) {
-            System.out.println("Error loading task list: " + e.getMessage());
+            throw new JimmyException("Error loading tasks from file.");
         }
 
         return tasks;
     }
 
-    public void save(ArrayList<Task> tasks) {
+    public void save(ArrayList<Task> tasks) throws JimmyException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath.toString()))) {
             for (Task task : tasks) {
                 bw.write(task.toFileFormat());
                 bw.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Error saving task list: " + e.getMessage());
+            throw new JimmyException("Error saving tasks to file.");
         }
     }
 }

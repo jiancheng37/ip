@@ -8,13 +8,13 @@ public class Deadline extends Task {
     protected static final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
 
-    public Deadline(String name, String by) {
+    public Deadline(String name, String by) throws JimmyException {
         super(name);
         try {
             this.by = LocalDateTime.parse(by, inputFormatter);
         } catch (DateTimeParseException e) {
-            System.out.println("Error: Invalid date format. Please use yyyy-MM-dd HHmm (e.g., 2019-12-02 1800).");
             this.by = null;
+            throw new JimmyException("Invalid date format. Please use yyyy-MM-dd HHmm (e.g., 2019-12-02 1800).");
         }
     }
 
