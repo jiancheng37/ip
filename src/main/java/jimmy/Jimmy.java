@@ -1,3 +1,4 @@
+package jimmy;
 public class Jimmy {
     private Storage storage;
     private TaskList tasks;

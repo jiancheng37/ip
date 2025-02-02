@@ -1,3 +1,4 @@
+package jimmy;
 import java.util.Scanner;
 
 public class Ui {

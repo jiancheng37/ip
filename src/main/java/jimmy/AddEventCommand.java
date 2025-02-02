@@ -1,3 +1,4 @@
+package jimmy;
 public class AddEventCommand extends Command {
     private final String description;
     private final String from;

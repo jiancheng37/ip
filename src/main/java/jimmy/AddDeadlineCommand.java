@@ -1,3 +1,5 @@
+package jimmy;
+
 public class AddDeadlineCommand extends Command {
     private final String description;
     private final String by;

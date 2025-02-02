@@ -1,3 +1,4 @@
+package jimmy;
 public abstract class Command{
     public Command() {}
 

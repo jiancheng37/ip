@@ -1,3 +1,4 @@
+package jimmy;
 public class UnmarkCommand extends Command {
     private final int index;
 

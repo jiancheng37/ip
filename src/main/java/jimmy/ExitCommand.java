@@ -1,3 +1,4 @@
+package jimmy;
 public class ExitCommand extends Command {
     public ExitCommand() {}
 

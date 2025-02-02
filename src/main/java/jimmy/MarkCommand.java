@@ -1,12 +1,13 @@
-public class DeleteCommand extends Command {
+package jimmy;
+public class MarkCommand extends Command {
     private final int index;
 
-    public DeleteCommand(String index) throws JimmyException {
+    public MarkCommand(String index) throws JimmyException {
         super();
         try {
             this.index = Integer.parseInt(index) - 1;
         } catch (NumberFormatException e) {
-            throw new JimmyException("Invalid index for delete command.");
+            throw new JimmyException("Invalid index for mark command.");
         }
     }
 
@@ -15,9 +16,10 @@ public class DeleteCommand extends Command {
         if (index < 0 || index >= tasks.size()) {
             throw new JimmyException("Task index out of bounds.");
         }
-        Task removedTask = tasks.deleteTask(index);
+        Task task = tasks.getTask(index);
+        task.mark();
         storage.save(tasks.getAllTasks());
-        ui.showMessage("Noted. I've removed this task:\n  " + removedTask + "\nNow you have " + tasks.size() + " tasks in the list.");
+        ui.showMessage("Nice! I've marked this task as done:\n  " + task);
     }
 
     @Override

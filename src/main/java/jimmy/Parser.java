@@ -1,3 +1,4 @@
+package jimmy;
 public class Parser {
     public static Command parse(String input) throws JimmyException {
         String[] words = input.split(" ", 2);
@@ -13,7 +14,7 @@ public class Parser {
             case "unmark":
                 return new UnmarkCommand(words[1]);
             case "delete":
-            
+
                 return new DeleteCommand(words[1]);
             case "todo":
                 return new AddTodoCommand(words[1]);
