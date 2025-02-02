@@ -60,27 +60,27 @@ public class Storage {
                 String[] parts = line.split(" \\| ");
                 Task task;
                 switch (parts[0]) {
-                    case "T":
-                        task = new Todo(parts[2]);
-                        break;
-                    case "D":
-                        try {
-                            task = new Deadline(parts[2], parts[3]);
-                        } catch (DateTimeParseException e) {
-                            System.out.println("Error: Invalid date format in file.");
-                            continue;
-                        }
-                        break;
-                    case "E":
-                        try {
-                            task = new Event(parts[2], parts[3], parts[4]);
-                        } catch (DateTimeParseException e) {
-                            System.out.println("Error: Invalid date format in file.");
-                            continue;
-                        }
-                        break;
-                    default:
+                case "T":
+                    task = new Todo(parts[2]);
+                    break;
+                case "D":
+                    try {
+                        task = new Deadline(parts[2], parts[3]);
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Error: Invalid date format in file.");
                         continue;
+                    }
+                    break;
+                case "E":
+                    try {
+                        task = new Event(parts[2], parts[3], parts[4]);
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Error: Invalid date format in file.");
+                        continue;
+                    }
+                    break;
+                default:
+                    continue;
                 }
                 if (parts[1].equals("1")) {
                     task.mark();

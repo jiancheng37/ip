@@ -7,7 +7,7 @@ package jimmy;
  */
 public class AddDeadlineCommand extends Command {
     private final String description;
-    private final String by;
+    private final String dueDate;
 
     /**
      * Constructs an {@code AddDeadlineCommand} by parsing the user's input.
@@ -23,7 +23,7 @@ public class AddDeadlineCommand extends Command {
             throw new JimmyException("The deadline command must include '/by'.");
         }
         this.description = parts[0].trim();
-        this.by = parts[1].trim();
+        this.dueDate = parts[1].trim();
     }
 
     /**
@@ -37,11 +37,11 @@ public class AddDeadlineCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
-        Task deadline = new Deadline(description, by);
-        tasks.addTask(deadline);
+        Task deadlineTask = new Deadline(description, dueDate);
+        tasks.addTask(deadlineTask);
         storage.save(tasks.getAllTasks());
-        ui.showMessage("Got it. I've added this task:\n  " + deadline + 
-                       "\nNow you have " + tasks.size() + " tasks in the list.");
+        ui.showMessage("Got it. I've added this task:\n  " + deadlineTask
+                + "\nNow you have " + tasks.size() + " tasks in the list.");
     }
 
     /**
