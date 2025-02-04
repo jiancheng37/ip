@@ -9,7 +9,6 @@ public class Parser {
 
     /**
      * Parses the user input and returns the corresponding {@code Command} object.
-     *
      * @param input the user's input string.
      * @return a {@code Command} representing the user's request.
      * @throws JimmyException if the command is invalid or the input is incomplete.
@@ -57,13 +56,15 @@ public class Parser {
 
         case "deadline":
             if (words.length < 2 || words[1].isBlank()) {
-                throw new JimmyException("The 'deadline' command requires a description and a due date. Example: deadline submit report /by 2024-12-31 2359");
+                throw new JimmyException("The 'deadline' command requires a description and a due date."
+                        + "Example: deadline submit report /by 2024-12-31 2359");
             }
             return new AddDeadlineCommand(words[1]);
 
         case "event":
             if (words.length < 2 || words[1].isBlank()) {
-                throw new JimmyException("The 'event' command requires a description, start time, and end time. Example: event project meeting /from 2024-12-01 1400 /to 2024-12-01 1600");
+                throw new JimmyException("The 'event' command requires a description, start time, and end time."
+                        + "Example: event project meeting /from 2024-12-01 1400 /to 2024-12-01 1600");
             }
             return new AddEventCommand(words[1]);
 

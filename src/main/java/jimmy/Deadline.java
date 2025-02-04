@@ -13,10 +13,10 @@ public class Deadline extends Task {
     private LocalDateTime by;
 
     /** Formatter for parsing input date-time strings (e.g., "yyyy-MM-dd HHmm"). */
-    protected static final DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private final static DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     /** Formatter for displaying date-time in a user-friendly format (e.g., "MMM dd yyyy, h:mm a"). */
-    protected static final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+    private final static DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
     /**
      * Constructs a {@code Deadline} task with the specified name and due date.
@@ -62,7 +62,7 @@ public class Deadline extends Task {
      * Returns the string representation of the deadline task for display in the UI.
      * The format is:
      * <pre>
-     * [D][✓] Task Name (by: Dec 02 2019, 6:00 PM)
+     * [D][] Task Name (by: Dec 02 2019, 6:00 PM)
      * </pre>
      *
      * @return the formatted string representation of the deadline task.

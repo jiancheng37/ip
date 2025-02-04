@@ -36,8 +36,8 @@ public class AddTodoCommand extends Command {
         Task todo = new Todo(description);
         tasks.addTask(todo);
         storage.save(tasks.getAllTasks());
-        ui.showMessage("Got it. I've added this task:\n  " + todo + 
-                       "\nNow you have " + tasks.size() + " tasks in the list.");
+        ui.showMessage("Got it. I've added this task:\n  " + todo
+                       + "\nNow you have " + tasks.size() + " tasks in the list.");
     }
 
     /**

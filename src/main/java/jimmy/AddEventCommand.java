@@ -42,8 +42,8 @@ public class AddEventCommand extends Command {
         Task event = new Event(description, from, to);
         tasks.addTask(event);
         storage.save(tasks.getAllTasks());
-        ui.showMessage("Got it. I've added this task:\n  " + event + 
-                       "\nNow you have " + tasks.size() + " tasks in the list.");
+        ui.showMessage("Got it. I've added this task:\n  " + event
+                + "\nNow you have " + tasks.size() + " tasks in the list.");
     }
 
     /**

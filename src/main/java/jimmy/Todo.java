@@ -43,11 +43,11 @@ public class Todo extends Task {
      * Returns the string representation of the to-do task for display in the UI.
      * The format is:
      * <pre>
-     * [T][✓] Task Name
+     * [T][] Task Name
      * </pre>
      * or
      * <pre>
-     * [T][✗] Task Name
+     * [T][] Task Name
      * </pre>
      * depending on whether the task is completed or not.
      *
