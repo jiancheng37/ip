@@ -1,3 +1,8 @@
-T | 0 | Read book
-T | 0 | Read magazine
-D | 1 | Do homework | 2002-10-10 0000
+T | 1 | Read magazine
+T | 1 | read book
+T | 1 | poop
+T | 1 | poopie
+T | 0 | list
+T | 0 | he
+T | 0 | he
+D | 0 | dodo | 2002-12-12 1800
