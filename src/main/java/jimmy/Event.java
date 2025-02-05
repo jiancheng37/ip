@@ -15,10 +15,10 @@ public class Event extends Task {
     private LocalDateTime to;
 
     /** Formatter for parsing input date-time strings (e.g., "yyyy-MM-dd HHmm"). */
-    protected static final DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private final static DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     /** Formatter for displaying date-time in a user-friendly format (e.g., "MMM dd yyyy, h:mm a"). */
-    protected static final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
+    private final static DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
     /**
      * Constructs an {@code Event} with the specified name, start time, and end time.
@@ -69,20 +69,22 @@ public class Event extends Task {
      */
     @Override
     public String toFileFormat() {
-        return "E | " + (isCompleted ? "1" : "0") + " | " + name + " | " + from.format(inputFormatter) + " | " + to.format(inputFormatter);
+        return "E | " + (isCompleted ? "1" : "0") + " | " + name + " | " + from.format(inputFormatter)
+                + " | " + to.format(inputFormatter);
     }
 
     /**
      * Returns the string representation of the event for display in the UI.
      * The format is:
      * <pre>
-     * [E][✓] Event Name (from: Dec 02 2019, 6:00 PM to: Dec 02 2019, 8:00 PM)
+     * [E][] Event Name (from: Dec 02 2019, 6:00 PM to: Dec 02 2019, 8:00 PM)
      * </pre>
      *
      * @return the formatted string representation of the event.
      */
     @Override
     public String toString() {
-        return "[E][" + getStatus() + "] " + name + " (from: " + from.format(outputFormatter) + " to: " + to.format(outputFormatter) + ")";
+        return "[E][" + getStatus() + "] " + name + " (from: " + from.format(outputFormatter)
+                + " to: " + to.format(outputFormatter) + ")";
     }
 }

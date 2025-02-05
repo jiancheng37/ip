@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'checkstyle'
 }
 
 repositories {
@@ -33,6 +34,11 @@ application {
 
 shadowJar {
     archiveFileName = 'jimmy.jar'
+}
+
+checkstyle {
+    configFile = file('config/checkstyle/checkstyle.xml')
+    toolVersion = '10.2'
 }
 
 run{
