@@ -22,14 +22,16 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+        String output = "";
         if (tasks.size() == 0) {
-            ui.showMessage("Your task list is empty.");
+            output += "Your task list is empty.";
         } else {
-            ui.showMessage("Here are the tasks in your list:");
+            output += "Here are the tasks in your list:\n";
             for (int i = 0; i < tasks.size(); i++) {
-                ui.showMessage((i + 1) + ". " + tasks.getTask(i));
+                output += (i + 1) + ". " + tasks.getTask(i) + "\n";
             }
         }
+        ui.showMessage(output);
     }
 
     /**
