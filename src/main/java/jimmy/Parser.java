@@ -1,5 +1,8 @@
 package jimmy;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The {@code Parser} class handles the interpretation of user input.
  * It converts raw input strings into corresponding {@code Command} objects
@@ -9,7 +12,18 @@ public class Parser {
 
     private static final String ERROR_INVALID_COMMAND = "Invalid command. Please enter a valid command like 'list', 'todo', 'find', etc.";
     private static final String ERROR_NO_ARGUMENTS = "The '%s' command requires additional arguments. Example: %s";
-
+    private static final Map<String, String> COMMAND_ALIASES = new HashMap<>();
+    
+    static {
+        COMMAND_ALIASES.put("t", "todo");
+        COMMAND_ALIASES.put("d", "deadline");
+        COMMAND_ALIASES.put("e", "event");
+        COMMAND_ALIASES.put("m", "mark");
+        COMMAND_ALIASES.put("u", "unmark");
+        COMMAND_ALIASES.put("del", "delete");
+        COMMAND_ALIASES.put("f", "find");
+        COMMAND_ALIASES.put("li", "list");
+    }
     /**
      * Parses the user input and returns the corresponding {@code Command} object.
      * @param input the user's input string.
@@ -23,6 +37,9 @@ public class Parser {
 
         String[] words = input.split(" ", 2);
         String commandWord = words[0];
+        if (COMMAND_ALIASES.containsKey(commandWord)) {
+            commandWord = COMMAND_ALIASES.get(commandWord);
+        }
 
         switch (commandWord) {
             case "bye":
