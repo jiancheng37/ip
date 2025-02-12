@@ -30,6 +30,7 @@ public class Storage {
      */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
+        assert filePath != null && !filePath.isEmpty() : "File path should not be null or empty";
         ensureFileExists();
     }
 
@@ -46,6 +47,7 @@ public class Storage {
             if (!Files.exists(filePath)) {
                 Files.createFile(filePath);
             }
+            assert Files.exists(filePath) : "File creation failed";
         } catch (IOException e) {
             System.out.println("Error ensuring file exists: " + e.getMessage());
         }
