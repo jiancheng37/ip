@@ -1,17 +1,10 @@
 package jimmy;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import java.time.format.DateTimeParseException;
-
 import java.util.ArrayList;
 
 /**
@@ -20,7 +13,12 @@ import java.util.ArrayList;
  * and writing to the file in a specific format.
  */
 public class Storage {
-    private Path filePath;
+    private static final String ERROR_LOADING_FILE = "Error loading tasks from file.";
+    private static final String ERROR_SAVING_FILE = "Error saving tasks to file.";
+    private static final String ERROR_INVALID_DATE_FORMAT = "Error: Invalid date format in file.";
+    private static final String FILE_DELIMITER = " \\| ";
+    
+    private final Path filePath;
 
     /**
      * Constructs a {@code Storage} object with the specified file path.
@@ -29,6 +27,7 @@ public class Storage {
      * @param filePath the path to the file where tasks will be stored.
      */
     public Storage(String filePath) {
+        assert filePath != null && !filePath.isEmpty() : "File path should not be null or empty";
         this.filePath = Paths.get(filePath);
         assert filePath != null && !filePath.isEmpty() : "File path should not be null or empty";
         ensureFileExists();
@@ -40,9 +39,9 @@ public class Storage {
      */
     private void ensureFileExists() {
         try {
-            Path dir = filePath.getParent();
-            if (dir != null && !Files.exists(dir)) {
-                Files.createDirectories(dir);
+            Path directory = filePath.getParent();
+            if (directory != null && !Files.exists(directory)) {
+                Files.createDirectories(directory);
             }
             if (!Files.exists(filePath)) {
                 Files.createFile(filePath);
@@ -61,46 +60,84 @@ public class Storage {
      * @throws JimmyException if an I/O error occurs during file reading.
      */
     public ArrayList<Task> load() throws JimmyException {
+        assert Files.exists(filePath) : "Task file should exist before loading";
+
         ArrayList<Task> tasks = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath.toString()))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toString()))) {
             String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(" \\| ");
-                Task task;
-                switch (parts[0]) {
+            while ((line = reader.readLine()) != null) {
+                Task task = parseTask(line);
+                if (task != null) {
+                    tasks.add(task);
+                }
+            }
+        } catch (IOException e) {
+            throw new JimmyException(ERROR_LOADING_FILE);
+        }
+
+        return tasks;
+    }
+
+    /**
+     * Parses a line from the file and converts it into a {@code Task} object.
+     * Handles different types of tasks based on their type identifier.
+     *
+     * @param line the line read from the file.
+     * @return the corresponding {@code Task} object, or {@code null} if the line is invalid.
+     * @throws JimmyException 
+     */
+    private Task parseTask(String line) throws JimmyException {
+        String[] parts = line.split(FILE_DELIMITER);
+        if (parts.length < 3) {
+            return null; // Skip invalid lines
+        }
+
+        Task task;
+        try {
+            switch (parts[0]) {
                 case "T":
                     task = new Todo(parts[2]);
                     break;
                 case "D":
-                    try {
-                        task = new Deadline(parts[2], parts[3]);
-                    } catch (DateTimeParseException e) {
-                        System.out.println("Error: Invalid date format in file.");
-                        continue;
-                    }
+                    task = parseDeadline(parts);
                     break;
                 case "E":
-                    try {
-                        task = new Event(parts[2], parts[3], parts[4]);
-                    } catch (DateTimeParseException e) {
-                        System.out.println("Error: Invalid date format in file.");
-                        continue;
-                    }
+                    task = parseEvent(parts);
                     break;
                 default:
-                    continue;
-                }
-                if (parts[1].equals("1")) {
-                    task.mark();
-                }
-                tasks.add(task);
+                    return null;
             }
-        } catch (IOException e) {
-            throw new JimmyException("Error loading tasks from file.");
+            if (parts[1].equals("1")) {
+                task.mark();
+            }
+            return task;
+        } catch (DateTimeParseException e) {
+            System.out.println(ERROR_INVALID_DATE_FORMAT);
+            return null;
         }
+    }
 
-        return tasks;
+    /**
+     * Parses a deadline task from file data.
+     *
+     * @param parts the parts of the task data split by the delimiter.
+     * @return a {@code Deadline} task.
+          * @throws JimmyException 
+          */
+    private Task parseDeadline(String[] parts) throws JimmyException {
+        return (parts.length >= 4) ? new Deadline(parts[2], parts[3]) : null;
+    }
+
+    /**
+     * Parses an event task from file data.
+     *
+     * @param parts the parts of the task data split by the delimiter.
+     * @return an {@code Event} task.
+     * @throws JimmyException 
+     */
+    private Task parseEvent(String[] parts) throws JimmyException {
+        return (parts.length >= 5) ? new Event(parts[2], parts[3], parts[4]) : null;
     }
 
     /**
@@ -111,13 +148,15 @@ public class Storage {
      * @throws JimmyException if an I/O error occurs during file writing.
      */
     public void save(ArrayList<Task> tasks) throws JimmyException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath.toString()))) {
+        assert tasks != null : "Task list should not be null";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toString()))) {
             for (Task task : tasks) {
-                bw.write(task.toFileFormat());
-                bw.newLine();
+                writer.write(task.toFileFormat());
+                writer.newLine();
             }
         } catch (IOException e) {
-            throw new JimmyException("Error saving tasks to file.");
+            throw new JimmyException(ERROR_SAVING_FILE);
         }
     }
 }
