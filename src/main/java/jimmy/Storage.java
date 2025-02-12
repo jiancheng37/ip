@@ -29,6 +29,7 @@ public class Storage {
     public Storage(String filePath) {
         assert filePath != null && !filePath.isEmpty() : "File path should not be null or empty";
         this.filePath = Paths.get(filePath);
+        assert filePath != null && !filePath.isEmpty() : "File path should not be null or empty";
         ensureFileExists();
     }
 

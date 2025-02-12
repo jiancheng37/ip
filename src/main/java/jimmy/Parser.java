@@ -17,9 +17,11 @@ public class Parser {
      * @throws JimmyException if the command is invalid or the input is incomplete.
      */
     public static Command parse(String input) throws JimmyException {
-        assert input != null : "User input should not be null";
+        assert input != null : "Input command should not be null";
+        input = input.trim();
+        assert !input.isEmpty() : "Command should not be empty";
 
-        String[] words = input.trim().split(" ", 2);
+        String[] words = input.split(" ", 2);
         String commandWord = words[0];
 
         switch (commandWord) {

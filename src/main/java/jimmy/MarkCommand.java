@@ -34,9 +34,12 @@ public class MarkCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
-        if (index < 0 || index >= tasks.size()) {
+        assert tasks != null : "TaskList should not be null";
+
+        if (index >= tasks.size()) {
             throw new JimmyException("Task index out of bounds.");
         }
+        
         Task task = tasks.getTask(index);
         task.mark();
         storage.save(tasks.getAllTasks());
