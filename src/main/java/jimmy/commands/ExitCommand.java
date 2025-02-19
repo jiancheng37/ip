@@ -13,6 +13,8 @@ public class ExitCommand extends Command {
 
     /**
      * Constructs an {@code ExitCommand}.
+     * 
+     * @param arguments the keyword used to check if the exit command is valid or not.
      * @throws JimmyException
     */
     public ExitCommand(String arguments) throws JimmyException {
