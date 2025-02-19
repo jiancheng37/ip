@@ -1,4 +1,11 @@
-package jimmy;
+package jimmy.commands;
+
+import jimmy.JimmyException;
+import jimmy.Storage;
+import jimmy.Ui;
+import jimmy.tasks.Task;
+import jimmy.tasks.TaskList;
+import jimmy.tasks.Todo;
 
 /**
  * The {@code AddTodoCommand} class represents a command to add a new to-do task
@@ -32,12 +39,14 @@ public class AddTodoCommand extends Command {
      * @throws JimmyException if an error occurs while saving the task.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
         Task todo = new Todo(description);
         tasks.addTask(todo);
         storage.save(tasks.getAllTasks());
         ui.showMessage("Got it. I've added this task:\n  " + todo
                        + "\nNow you have " + tasks.size() + " tasks in the list.");
+        return "Got it. I've added this task:\n  " + todo
+                       + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     /**

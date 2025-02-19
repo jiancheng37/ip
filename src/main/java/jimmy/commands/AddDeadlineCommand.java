@@ -1,4 +1,11 @@
-package jimmy;
+package jimmy.commands;
+
+import jimmy.JimmyException;
+import jimmy.Storage;
+import jimmy.Ui;
+import jimmy.tasks.Deadline;
+import jimmy.tasks.Task;
+import jimmy.tasks.TaskList;
 
 /**
  * The {@code AddDeadlineCommand} class represents a command to add a new deadline task
@@ -20,7 +27,7 @@ public class AddDeadlineCommand extends Command {
         super();
         String[] parts = input.split(" /by ");
         if (parts.length < 2) {
-            throw new JimmyException("The deadline command must include '/by'.");
+            throw new JimmyException("The deadline command must be in 'deadline {NAME} /by yyyy-MM-dd HHmm' format.");
         }
         this.description = parts[0].trim();
         this.dueDate = parts[1].trim();
@@ -36,12 +43,14 @@ public class AddDeadlineCommand extends Command {
      * @throws JimmyException if an error occurs while creating or saving the deadline task.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
         Task deadlineTask = new Deadline(description, dueDate);
         tasks.addTask(deadlineTask);
         storage.save(tasks.getAllTasks());
         ui.showMessage("Got it. I've added this task:\n  " + deadlineTask
                 + "\nNow you have " + tasks.size() + " tasks in the list.");
+        return "Got it. I've added this task:\n  " + deadlineTask
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     /**

@@ -1,4 +1,4 @@
-package jimmy;
+package jimmy.tasks;
 
 /**
  * Represents an abstract task with a name and completion status.

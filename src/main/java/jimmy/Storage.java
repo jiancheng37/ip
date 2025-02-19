@@ -1,11 +1,20 @@
 package jimmy;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+
+import jimmy.tasks.Deadline;
+import jimmy.tasks.Event;
+import jimmy.tasks.Task;
+import jimmy.tasks.Todo;
 
 /**
  * Handles the loading and saving of tasks to a file for persistent storage.
@@ -17,7 +26,6 @@ public class Storage {
     private static final String ERROR_SAVING_FILE = "Error saving tasks to file.";
     private static final String ERROR_INVALID_DATE_FORMAT = "Error: Invalid date format in file.";
     private static final String FILE_DELIMITER = " \\| ";
-    
     private final Path filePath;
 
     /**
@@ -85,7 +93,7 @@ public class Storage {
      *
      * @param line the line read from the file.
      * @return the corresponding {@code Task} object, or {@code null} if the line is invalid.
-     * @throws JimmyException 
+     * @throws JimmyException
      */
     private Task parseTask(String line) throws JimmyException {
         String[] parts = line.split(FILE_DELIMITER);
@@ -96,17 +104,17 @@ public class Storage {
         Task task;
         try {
             switch (parts[0]) {
-                case "T":
-                    task = new Todo(parts[2]);
-                    break;
-                case "D":
-                    task = parseDeadline(parts);
-                    break;
-                case "E":
-                    task = parseEvent(parts);
-                    break;
-                default:
-                    return null;
+            case "T":
+                task = new Todo(parts[2]);
+                break;
+            case "D":
+                task = parseDeadline(parts);
+                break;
+            case "E":
+                task = parseEvent(parts);
+                break;
+            default:
+                return null;
             }
             if (parts[1].equals("1")) {
                 task.mark();
@@ -123,8 +131,8 @@ public class Storage {
      *
      * @param parts the parts of the task data split by the delimiter.
      * @return a {@code Deadline} task.
-          * @throws JimmyException 
-          */
+     * @throws JimmyException
+     */
     private Task parseDeadline(String[] parts) throws JimmyException {
         return (parts.length >= 4) ? new Deadline(parts[2], parts[3]) : null;
     }
@@ -134,7 +142,7 @@ public class Storage {
      *
      * @param parts the parts of the task data split by the delimiter.
      * @return an {@code Event} task.
-     * @throws JimmyException 
+     * @throws JimmyException
      */
     private Task parseEvent(String[] parts) throws JimmyException {
         return (parts.length >= 5) ? new Event(parts[2], parts[3], parts[4]) : null;

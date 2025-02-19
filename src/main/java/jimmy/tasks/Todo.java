@@ -1,4 +1,4 @@
-package jimmy;
+package jimmy.tasks;
 
 /**
  * The {@code Todo} class represents a task without any date/time attached to it.

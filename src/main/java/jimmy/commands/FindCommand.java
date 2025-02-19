@@ -1,21 +1,26 @@
-package jimmy;
+package jimmy.commands;
+
+import jimmy.JimmyException;
+import jimmy.Storage;
+import jimmy.Ui;
+import jimmy.tasks.TaskList;
 
 /**
  * The {@code FindCommand} class represents a command to search for tasks in the task list
  * that contain a specific keyword. The search is case-insensitive and displays all matching tasks.
  */
 public class FindCommand extends Command {
-    private final String input;
+    private final String arguments;
 
     /**
      * Constructs a {@code FindCommand} with the specified search keyword.
      *
-     * @param input the keyword used to search for matching tasks in the task list.
+     * @param arguments the keyword used to search for matching tasks in the task list.
      * @throws JimmyException if an error occurs during initialization (reserved for future validation).
      */
-    public FindCommand(String input) throws JimmyException {
+    public FindCommand(String arguments) throws JimmyException {
         super();
-        this.input = input;
+        this.arguments = arguments;
     }
 
     /**
@@ -28,15 +33,18 @@ public class FindCommand extends Command {
      * @throws JimmyException if an error occurs during task retrieval (reserved for future enhancements).
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
-        ui.showMessage("Here are the matching tasks in your list:");
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
+        String output = "";
+        output += "Here are the matching tasks in your list:\n";
         int index = 1;
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.getTask(i).getName().toLowerCase().contains(input.toLowerCase())) {
-                ui.showMessage(index + ". " + tasks.getTask(i));
+            if (tasks.getTask(i).getName().toLowerCase().contains(arguments.toLowerCase())) {
+                output += (index) + ". " + tasks.getTask(i) + "\n";
                 index++;
             }
         }
+        ui.showMessage(output);
+        return output;
     }
 
     /**

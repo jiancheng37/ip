@@ -7,10 +7,21 @@ import javafx.scene.control.TextArea;
  */
 public class Ui {
     private TextArea chatArea;
+
+    /**
+     * Constructs a {@code Ui} instance with the specified chat area.
+     *
+     * @param chatArea the {@code TextArea} component where messages will be displayed.
+     */
     public Ui(TextArea chatArea) {
         this.chatArea = chatArea;
     }
 
+    /**
+     * Displays a message in the chat area with the "Jimmy:" prefix.
+     *
+     * @param message the message to be displayed.
+     */
     public void showMessage(String message) {
         if (chatArea != null) {
             chatArea.appendText("Jimmy: " + message + "\n");
