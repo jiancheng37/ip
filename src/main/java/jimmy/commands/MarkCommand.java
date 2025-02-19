@@ -1,4 +1,10 @@
-package jimmy;
+package jimmy.commands;
+
+import jimmy.JimmyException;
+import jimmy.Storage;
+import jimmy.Ui;
+import jimmy.tasks.Task;
+import jimmy.tasks.TaskList;
 
 /**
  * The {@code MarkCommand} class represents a command to mark a specific task
@@ -33,17 +39,16 @@ public class MarkCommand extends Command {
      * @throws JimmyException if the task index is out of bounds.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
         assert tasks != null : "TaskList should not be null";
-
-        if (index >= tasks.size()) {
+        if (index < 0 || index >= tasks.size()) {
             throw new JimmyException("Task index out of bounds.");
         }
-        
         Task task = tasks.getTask(index);
         task.mark();
         storage.save(tasks.getAllTasks());
         ui.showMessage("Nice! I've marked this task as done:\n  " + task);
+        return "Nice! I've marked this task as done:\n  " + task;
     }
 
     /**

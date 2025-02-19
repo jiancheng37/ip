@@ -1,8 +1,10 @@
-package jimmy;
+package jimmy.tasks;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import jimmy.JimmyException;
 
 /**
  * The {@code Deadline} class represents a task with a specific deadline.
@@ -10,13 +12,9 @@ import java.time.format.DateTimeParseException;
  * the task for both display and file storage.
  */
 public class Deadline extends Task {
+    private static final DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
     private LocalDateTime by;
-
-    /** Formatter for parsing input date-time strings (e.g., "yyyy-MM-dd HHmm"). */
-    private final static DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
-    /** Formatter for displaying date-time in a user-friendly format (e.g., "MMM dd yyyy, h:mm a"). */
-    private final static DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
     /**
      * Constructs a {@code Deadline} task with the specified name and due date.

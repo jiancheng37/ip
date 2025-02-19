@@ -1,4 +1,10 @@
-package jimmy;
+package jimmy.commands;
+
+import jimmy.JimmyException;
+import jimmy.Storage;
+import jimmy.Ui;
+import jimmy.tasks.Task;
+import jimmy.tasks.TaskList;
 
 /**
  * The {@code UnmarkCommand} class represents a command to unmark a specific task
@@ -9,7 +15,6 @@ package jimmy;
  * saves the updated task list to storage, and notifies the user via the UI.</p>
  */
 public class UnmarkCommand extends Command {
-    /** The zero-based index of the task to be unmarked. */
     private final int index;
 
     /**
@@ -37,7 +42,7 @@ public class UnmarkCommand extends Command {
      * @throws JimmyException if the task index is out of bounds.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
         if (index < 0 || index >= tasks.size()) {
             throw new JimmyException("Task index out of bounds.");
         }
@@ -45,6 +50,7 @@ public class UnmarkCommand extends Command {
         task.unmark();
         storage.save(tasks.getAllTasks());
         ui.showMessage("OK, I've marked this task as not done yet:\n  " + task);
+        return "OK, I've marked this task as not done yet:\n  " + task;
     }
 
     /**

@@ -1,4 +1,10 @@
-package jimmy;
+package jimmy.commands;
+
+import jimmy.JimmyException;
+import jimmy.Storage;
+import jimmy.Ui;
+import jimmy.tasks.Task;
+import jimmy.tasks.TaskList;
 
 /**
  * The {@code DeleteCommand} class represents a command to delete a specific task
@@ -32,7 +38,7 @@ public class DeleteCommand extends Command {
      * @throws JimmyException if the task index is out of bounds.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JimmyException {
         if (index < 0 || index >= tasks.size()) {
             throw new JimmyException("Task index out of bounds.");
         }
@@ -40,6 +46,8 @@ public class DeleteCommand extends Command {
         storage.save(tasks.getAllTasks());
         ui.showMessage("Noted. I've removed this task:\n  " + removedTask
                 + "\nNow you have " + tasks.size() + " tasks in the list.");
+        return "Noted. I've removed this task:\n  " + removedTask
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 
     /**

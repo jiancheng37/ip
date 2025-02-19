@@ -1,5 +1,7 @@
 package jimmy;
 
+import jimmy.tasks.TaskList;
+
 /**
  * The {@code Jimmy} class serves as the core logic handler for the chatbot application.
  * It initializes the storage and task list, and provides access to tasks and storage for the GUI.

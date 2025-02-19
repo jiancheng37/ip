@@ -1,4 +1,4 @@
-package jimmy;
+package jimmy.tasks;
 
 import java.util.ArrayList;
 

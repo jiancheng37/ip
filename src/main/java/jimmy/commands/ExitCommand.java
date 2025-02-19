@@ -1,4 +1,9 @@
-package jimmy;
+package jimmy.commands;
+
+import jimmy.JimmyException;
+import jimmy.Storage;
+import jimmy.Ui;
+import jimmy.tasks.TaskList;
 
 /**
  * The {@code ExitCommand} class represents a command to terminate the application.
@@ -8,8 +13,14 @@ public class ExitCommand extends Command {
 
     /**
      * Constructs an {@code ExitCommand}.
-     */
-    public ExitCommand() {}
+     * @throws JimmyException
+    */
+    public ExitCommand(String arguments) throws JimmyException {
+        super();
+        if (!arguments.isEmpty()) {
+            throw new JimmyException("Bye command must not have additional arguments.");
+        }
+    }
 
     /**
      * Executes the exit command by displaying a goodbye message to the user.
@@ -19,8 +30,8 @@ public class ExitCommand extends Command {
      * @param storage the {@code Storage} instance (not used in this command).
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        return;
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        return "";
     }
 
     /**

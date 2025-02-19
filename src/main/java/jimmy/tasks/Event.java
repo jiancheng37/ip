@@ -1,8 +1,10 @@
-package jimmy;
+package jimmy.tasks;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import jimmy.JimmyException;
 
 /**
  * The {@code Event} class represents a task that occurs within a specific time frame.
@@ -10,15 +12,10 @@ import java.time.format.DateTimeParseException;
  * and provides methods to format the event for display and file storage.
  */
 public class Event extends Task {
-
+    private static final DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
     private LocalDateTime from;
     private LocalDateTime to;
-
-    /** Formatter for parsing input date-time strings (e.g., "yyyy-MM-dd HHmm"). */
-    private final static DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
-    /** Formatter for displaying date-time in a user-friendly format (e.g., "MMM dd yyyy, h:mm a"). */
-    private final static DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
     /**
      * Constructs an {@code Event} with the specified name, start time, and end time.

@@ -1,4 +1,9 @@
-package jimmy;
+package jimmy.commands;
+
+import jimmy.JimmyException;
+import jimmy.Storage;
+import jimmy.Ui;
+import jimmy.tasks.TaskList;
 
 /**
  * The {@code ListCommand} class represents a command to display all tasks
@@ -9,8 +14,15 @@ public class ListCommand extends Command {
 
     /**
      * Constructs a {@code ListCommand}.
+     *
+     * @param arguments the keyword used to check if the list command is valid or not.
+     * @throws JimmyException
      */
-    public ListCommand() {}
+    public ListCommand(String arguments) throws JimmyException {
+        if (!arguments.isEmpty()) {
+            throw new JimmyException("List command must not have additional arguments.");
+        }
+    }
 
     /**
      * Executes the list command by displaying all tasks in the task list.
@@ -21,7 +33,7 @@ public class ListCommand extends Command {
      * @param storage the {@code Storage} instance (not used in this command).
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         String output = "";
         if (tasks.size() == 0) {
             output += "Your task list is empty.";
@@ -32,6 +44,7 @@ public class ListCommand extends Command {
             }
         }
         ui.showMessage(output);
+        return output;
     }
 
     /**
